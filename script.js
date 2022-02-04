@@ -24,6 +24,14 @@ function playRound(playerSelection, computerSelection) {
     const result = document.querySelector('#results')
     const scoreDiv = document.querySelector('#score')
     const compScoreDiv = document.querySelector('#compScore')
+
+    function endGame(win){
+        result.textContent = `You ${win}!`
+        score = 0
+        compScore = 0
+        scoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
+    }
     playerSelection = capitalize(playerSelection)
     if (computerSelection == playerSelection) {
         result.textContent = "Game tie!"
@@ -49,17 +57,9 @@ function playRound(playerSelection, computerSelection) {
         compScoreDiv.textContent = `Computer Score: ${compScore}`
     }
     if(score >= 5){
-        result.textContent = 'You won!'
-        score = 0
-        compScore = 0
-        scoreDiv.textContent = `Score: ${score}`
-        compScoreDiv.textContent = `Computer Score: ${compScore}`
+        endGame('win')
     } else if(compScore >= 5){
-        result.textContent = 'You lose!'
-        score = 0
-        compScore = 0
-        compScoreDiv.textContent = `Score: ${score}`
-        compScoreDiv.textContent = `Computer Score: ${compScore}`
+        endGame('lose')
     }
 }
 
