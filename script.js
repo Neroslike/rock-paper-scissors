@@ -18,36 +18,59 @@ function capitalize(word) {
     return capletter + word
 }
 
+let score = 0
+let compScore = 0
 function playRound(playerSelection, computerSelection) {
+    const result = document.querySelector('#results')
+    const scoreDiv = document.querySelector('#score')
+    const compScoreDiv = document.querySelector('#compScore')
     playerSelection = capitalize(playerSelection)
     if (computerSelection == playerSelection) {
-        console.log(`Game tie!`)
-        return 50
+        result.textContent = "Game tie!"
+        scoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
     } else if ((computerSelection == 'Rock' && playerSelection ==  'Paper')  ||
     (computerSelection == 'Paper' && playerSelection ==  'Scissors') ||
     (computerSelection == 'Scissors' && playerSelection ==  'Rock')){
-        console.log(`You won! ${playerSelection} beats ${computerSelection}`)
-        return 100
+        score = score + 1
+        if(compScore < 0){
+            compScore = 0
+        }
+        result.textContent = `You won! ${playerSelection} beats ${computerSelection}`
+        scoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
     } else {
-        console.log(`You lose! ${computerSelection} beats ${playerSelection}`)
-        return -100
+        compScore = compScore + 1
+        if(score < 0){
+            score = 0
+        }
+        result.textContent = `You lose! ${computerSelection} beats ${playerSelection}`
+        scoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
+    }
+    if(score >= 5){
+        result.textContent = 'You won!'
+        score = 0
+        compScore = 0
+        scoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
+    } else if(compScore >= 5){
+        result.textContent = 'You lose!'
+        score = 0
+        compScore = 0
+        compScoreDiv.textContent = `Score: ${score}`
+        compScoreDiv.textContent = `Computer Score: ${compScore}`
     }
 }
 
-function game(){
-    let score = 0
-    for (let i = 0; i < 5;i++) {
-        console.log(score)
-        score = score + playRound(prompt('Pick rock, paper or scissors'),  computerPlay(getRndInteger(1,4)));;
-        console.log(`The current score is ${score}`)
-    }
-    if (score == 250) {
-        console.log(`The game tied, Total score: ${score}`)
-    } else if (score > 250) {
-        console.log(`Congratulations, you won! Total score: ${score}`)
-    } else {
-        console.log(`You lost, better luck next time, Total score: ${score}`)
-    }
+const rock = document.querySelector("#rock")
+const paper = document.querySelector("#paper")
+const scissors = document.querySelector("#scissors")
+
+function playerPick(){
+    playRound(this.id, computerPlay(getRndInteger(1, 4)))
 }
 
-game();
+rock.addEventListener('click', playerPick)
+paper.addEventListener('click', playerPick)
+scissors.addEventListener('click', playerPick)
