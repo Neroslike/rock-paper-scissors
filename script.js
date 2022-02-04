@@ -51,5 +51,3 @@ function game(){
 }
 
 game();
-
-// When the user inputs a selection, compare it to the computer selection and decide the winner
